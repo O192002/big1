@@ -1,0 +1,120 @@
+Practical 1:Hadoop installation steps:
+
+Installation of Java
+
+Step1: download java8  from the official site: https://www.oracle.com/in/java/technologies/downloads/#java8 
+
+Download 64 bit for windows
+
+ Step2:Install the java directly in the C drive directly. Create a new folder java in c drive and install java in that folder and complete the installation
+
+Step3: Go to the java folder and next to the bin folder you can see there is no jdk folder in it . Then go to Program files java folder cut the jdk folder in it and add it to the java folder recently created in c drive. Then go to the program files and delete the java folder in it to avoid duplication
+
+step4:Now set the environmental variables:
+
+Under User variable - -> JAVA_HOME: and set the path of java bin folder which is present in (java - -> jdk 1.8 – - > bin)
+
+Under System variable – - > Path - -> select new and paste the same path what you have set on the user variables click on ok to set changes
+
+Step5: Check if java is installed correctly - -> java -version  and press enter 
+Next command - -> javac 
+
+Step6: Java is installed successfully
+
+
+Installation of hadoop:
+
+Step1: Download hadoop from the official site : https://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.4.0/hadoop-3.4.0.tar.gz
+
+Step2: extract it in the C drive directly
+
+Step3: Open the hadoop 3.4 folder- ->etc folder - ->hadoop - -> There are 4 files to be edited
+
+Step4: Edit core-site.xml
+
+Add this
+<configuration>
+<property>
+	<name>fs.defaultFS</name>
+	<value>hdfs://localhost:9000</value>
+</property>
+</configuration>
+
+
+Step5: Edit mapreduce-site.xml
+
+Add this
+<configuration>
+<property>
+	<name>mapreduce.framework.name</name>
+	<value>yarn</value>
+</property>
+</configuration>
+
+Step6: Edit Yarn-site.xml
+
+Add this
+<configuration>
+
+<property>
+	<name>yarn.nodemanager.aux-services</name>
+	<value>mapreduce_shuffle</value>
+</property>
+<property>
+	<name>yarn.nodemanager.auxservices.mapreduce.shuffle</name>
+	<value>org.apache.hadoop.mapred.shufflehandler</value>
+</property>
+
+</configuration>
+
+Before editing hdfs-site.xml we need to create a data folder in hadoop folder 
+Hadoop→data →namenode and datanode create these two folders in data folder
+
+step7:Edit hdfs-site.xml
+
+ADD THIS
+<configuration>
+<property>
+	<name>dfs.replication</name>
+	<value>1</value>
+</property>
+<property>
+	<name>dfs.namenode.name.dir</name>
+	<value>C:\hadoop\data\namenode</value>
+</property>
+<property>
+	<name>dfs.datanode.name.dir</name>
+	<value>C:\hadoop\data\datanode</value>
+</property>
+</configuration>
+
+
+
+Step8: Edit hadoop-env file
+
+Make these changes:
+
+In section set JAVA_HOME=put the java path that is C:\Java\jdk-1.8
+
+Step9: set environmental variables for hadoop:
+
+Under User variable:
+HADOOP_HOME value: path of the hadoop’s bin folder
+
+Under system variable:
+Set the path for both bin and sbin folder 
+
+eg:C:\hadoop\bin
+     C:\hadoop\sbin
+
+Step9: To check if it is running or not 
+
+In command prompt add “hdfs namenode -format” and hit enter
+
+Now if you want to check further go to sbin folder cmd type this command “start-all.cmd”
+
+Note: If you are getting error then go to etc again select hadoop-env and edit the username to your username but without spaces
+
+Step10:verify hdfs web portal ui
+http://localhost:9870/dfshealth.html#tab-overview
+
